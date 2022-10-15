@@ -1,15 +1,24 @@
-// 2 CREATION D'UNE APPLICATION
+// APPLICATION EXPRESS
 
-// Import de la librairie "express" permettant de connecter MongoDB à Node.js
+// Récupère la librairie "Express" pour gérer plus facilement des requêtes http côté backend
 const express = require("express");
 
-const app = express();
+// Récupère la fonction "body-parser" pour transformer une demande en objet Javascript
+const bodyParser = require("body-parser");
 
-// Import du nouveau modèle Mongoose dans l'application
-const Thing = require("./models/thing");
-
-// Importation de Mongoose (package qui facilite les intéractions avec la base de données)
+// Récupère la librairie Mongoose qui crée une connexion entre MongoDB et Node.js
 const mongoose = require("mongoose");
+
+// Enregistrement du nouveau routeur
+const stuffRoutes = require("./routes/stuff");
+
+// Enregistrement du routeur
+const userRoutes = require("./routes/user");
+
+// Accès au "path" du serveur
+const path = require("path");
+
+// Connecte la librairie Mongoose à la base de données noSQL "MongoDB"
 mongoose
   .connect(
     "mongodb+srv://FloleDev6942:Sbq3yueQAjI1sJLO@cluster0.vyoctbw.mongodb.net/?retryWrites=true&w=majority",
@@ -18,23 +27,28 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
+const app = express(); // ???????????????????????
+
+// Prévois un évenement qui exécute du code à chaque requête (méthode)
 app.use((req, res, next) => {
-  console.log("Requête reçue !");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
   next();
 });
 
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
+app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.json({ message: "Votre requête a bien été reçue !" });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log("Réponse envoyée avec succès !");
-});
-
+// C'est du routing: on lui demande si il trouve l'url: "/api/stuff", si oui il exécute "stufRoutes"
+// app = application express
+// app.use = ""évenement" identique à enventlistener
+app.use("/api/stuff", stuffRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/images", express.static(path.join(__dirname, "images")));
 module.exports = app;
