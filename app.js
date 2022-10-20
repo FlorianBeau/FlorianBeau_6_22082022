@@ -3,6 +3,9 @@
 // Récupère la librairie "Express" pour gérer plus facilement des requêtes http côté backend
 const express = require("express");
 
+// On appel "Express"
+const app = express();
+
 // Récupère la fonction "body-parser" pour transformer une demande en objet Javascript
 const bodyParser = require("body-parser");
 
@@ -10,7 +13,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 // Enregistrement du nouveau routeur
-const stuffRoutes = require("./routes/stuff");
+const saucesRoutes = require("./routes/sauces");
 
 // Enregistrement du routeur
 const userRoutes = require("./routes/user");
@@ -26,8 +29,6 @@ mongoose
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
-
-const app = express(); // ???????????????????????
 
 // Prévois un évenement qui exécute du code à chaque requête (méthode)
 app.use((req, res, next) => {
@@ -45,10 +46,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// C'est du routing: on lui demande si il trouve l'url: "/api/stuff", si oui il exécute "stufRoutes"
+// C'est du routing: on lui demande si il trouve l'url: "/api/stuff", si oui il exécute "stuffRoutes"
 // app = application express
-// app.use = ""évenement" identique à enventlistener
-app.use("/api/stuff", stuffRoutes);
+// app.use = "évenement" identique à enventlistener
+app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));
 module.exports = app;
