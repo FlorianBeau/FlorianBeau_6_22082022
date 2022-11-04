@@ -1,12 +1,15 @@
-// Middleware = fonction d'Express entre la requête "req" et la réponse "res" permettant d'exécuter
-// du code à ce moment la
+// Middleware = permet d'effectuer des traitements intermédiaires lancés par la route avant le controller
 
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    req.auth = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    // Il manquerait ce code ?
+    req.token = jwt.verify(token, "e07518e7048f21685308a2f7b61eb371");
+
+    // ANCIEN CODE
+    // jwt.verify(token, "RANDOM_TOKEN_SECRET");
 
     next();
   } catch (error) {

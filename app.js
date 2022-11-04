@@ -1,4 +1,4 @@
-// APPLICATION EXPRESS
+// APPLICATION EXPRESS: charge les composants nécessaires à l'application: Mongoose, Express, routes...
 
 // Récupère la librairie "Express" pour gérer plus facilement des requêtes http côté backend
 const express = require("express");
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// C'est du routing: on lui demande si il trouve l'url: "/api/stuff", si oui il exécute "stuffRoutes"
+// C'est du routing: on lui demande si il trouve l'url: "/api/sauces", si oui il exécute "saucesRoutes"
 // app = application express
 // app.use = "évenement" identique à enventlistener
 app.use("/api/sauces", saucesRoutes);

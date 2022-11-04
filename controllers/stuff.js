@@ -1,3 +1,4 @@
+/*
 const Thing = require("../models/thing");
 const fs = require("fs");
 
@@ -98,3 +99,4 @@ exports.getAllStuff = (req, res, next) => {
       });
     });
 };
+*/

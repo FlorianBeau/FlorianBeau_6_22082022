@@ -1,15 +1,11 @@
-/*
-// On crée un schéma Thing (modèle)
+// Format de données en base et fonctionnalités associées à ces données: find, update...
+
+// On crée un schéma Sauce (modèle)
 const mongoose = require("mongoose");
 
-const thingSchema = mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  imageUrl: { type: String, required: true },
-  userId: { type: String, required: true },
-  price: { type: Number, required: true },
+// FALSE INDIQUE POUR TESTS SUR DES PROPRIETES ////////////////////////////////////////////////////////
 
-  /*
+const sauceSchema = mongoose.Schema({
   // L'identifiant MongoDB unique de l'utilisateur qui a créé la sauce:
   userId: { type: String, required: true },
   // Le nom de la sauce:
@@ -23,17 +19,15 @@ const thingSchema = mongoose.Schema({
   // L'URL de l'image de la sauce téléchargée par l'utilisateur:
   imageUrl: { type: String, required: true },
   // Nombre entre 1 et 10 décrivant la sauce:
-  heat: { type: Number, required: true },
+  heat: { type: Number, required: false },
   // Nombre d'utilisateurs qui aiment (= likent) la sauce:
-  likes: { type: Number, required: true },
+  likes: { type: Number, required: false, default: 0 },
   // Nombre d'utilisateurs qui n'aiment pas (= dislike) la sauce:
-  dislikes: { type: Number, required: true },
+  dislikes: { type: Number, required: false, default: 0 },
   // : [ "String <userId>" ] Tableau des identifiants des utilisateurs qui ont aimé (= liked) la sauce:
-  usersLiked: { type: String, required: true },
+  usersLiked: { type: [String], required: false, default: [] },
   // [ "String <userId>" ] — tableau des identifiants des utilisateurs qui n'ont pas aimé (= disliked) la sauce:
-  usersDisliked: { type: String, required: true },
-
+  usersDisliked: { type: [String], required: false, default: [] },
 });
 
-module.exports = mongoose.model("Thing", thingSchema);
-*/
+module.exports = mongoose.model("Sauce", sauceSchema);
