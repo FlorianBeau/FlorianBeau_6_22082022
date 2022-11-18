@@ -178,7 +178,6 @@ exports.postLike = (req, res, next) => {
       .save()
       .then((sauce) => {
         res.status(200).json(sauce);
-        console.log(res.sauce);
       })
       .catch((error) => {
         res.status(400).json({
