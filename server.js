@@ -1,9 +1,9 @@
-// SERVEUR NODE (serveur web)
+// CREATION DU SERVEUR NODE (serveur web)
 
-// Récupère les requêtes http ?
+// Récupère les requêtes http
 const http = require("http");
 
-// Récupère la route de l'application ?
+// Récupère la route de l'application
 const app = require("./app");
 
 const normalizePort = (val) => {
@@ -17,7 +17,7 @@ const normalizePort = (val) => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || "3000"); // Modifié pour test
+const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 const errorHandler = (error) => {

@@ -1,32 +1,25 @@
-// APPLICATION EXPRESS: charge les composants nécessaires à l'application: Mongoose, Express, routes...
+// CREATION DE L'APPLICATION EXPRESS (API)
 
-// Récupère la librairie "Express" pour gérer plus facilement des requêtes http côté backend
 const express = require("express");
-
-// On appel "Express"
 const app = express();
-
-// Récupère la fonction "body-parser" pour transformer une demande en objet Javascript
-const bodyParser = require("body-parser");
-
-// Récupère la librairie Mongoose qui crée une connexion entre MongoDB et Node.js
+require("dotenv").config();
 const mongoose = require("mongoose");
-
-// Enregistrement du nouveau routeur
 const saucesRoutes = require("./routes/sauces");
-
-// Enregistrement du routeur
 const userRoutes = require("./routes/user");
-
-// Accès au "path" du serveur
 const path = require("path");
+const helmet = require("helmet");
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 
 // Connecte la librairie Mongoose à la base de données noSQL "MongoDB"
 mongoose
-  .connect(
-    "mongodb+srv://FloleDev6942:Sbq3yueQAjI1sJLO@cluster0.vyoctbw.mongodb.net/?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.mongoconnection, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
@@ -44,11 +37,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-// C'est du routing: on lui demande si il trouve l'url: "/api/sauces", si oui il exécute "saucesRoutes"
-// app = application express
-// app.use = "évenement" identique à enventlistener
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));

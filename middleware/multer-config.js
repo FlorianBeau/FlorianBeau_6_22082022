@@ -1,4 +1,4 @@
-// "multer" = middelware Express permettant de gérer les fichiers dans les requêtes http
+// CREATION DU MIDDLEWARE DEDIE AUX FICHIERS
 
 const multer = require("multer");
 

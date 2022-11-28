@@ -1,8 +1,11 @@
+// CREATION DU CONTROLLER DE L'UTILISATEUR
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
+require("dotenv").config();
 
-// Enregistrement nouveaux utilisateurs
+// Création compte utilisateur
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -19,10 +22,7 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-// Connecter les utilisateurs
-// User = model
-// Model = avec majuscule
-// user = avec  miniscule = utilisateur de la BDD
+// Connection utilisateurs
 // ! = contraire
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
@@ -40,13 +40,9 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign(
-              { userId: user._id },
-              "e07518e7048f21685308a2f7b61eb371",
-              {
-                expiresIn: "24h",
-              }
-            ),
+            token: jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+              expiresIn: "24h",
+            }),
           });
         })
         .catch((error) => res.status(500).json({ error }));

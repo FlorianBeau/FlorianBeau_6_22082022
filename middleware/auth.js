@@ -1,15 +1,11 @@
-// Middleware = permet d'effectuer des traitements intermédiaires lancés par la route avant le controller
+// CREATION DU MIDDLEWARE DEDIE AUX UTILISATEURS
 
 const jwt = require("jsonwebtoken");
-
+require("dotenv").config();
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    // Il manquerait ce code ?
-    req.token = jwt.verify(token, "e07518e7048f21685308a2f7b61eb371");
-
-    // ANCIEN CODE
-    // jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    req.token = jwt.verify(token, process.env.JWT_SECRET);
 
     next();
   } catch (error) {

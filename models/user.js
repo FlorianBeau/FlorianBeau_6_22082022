@@ -1,3 +1,4 @@
+// CREATION DU SCHEMA UTILISATEUR (modèle)
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
